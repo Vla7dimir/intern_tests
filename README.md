@@ -10,9 +10,26 @@
 
 Класс для работы с деревом объектов с быстрым доступом O(1).
 
-**Ссылка:** [1_backend_мстрой](./1_backend_мстрой)
+**Ссылка:** [1_backend_MSstroy](./1_backend_MSstroy)
 
 **Основные возможности:**
 - Быстрый доступ к элементам дерева O(1)
-- Методы: `getAll()`, `getItem()`, `getChildren()`, `getAllParents()`
+- Методы: `get_all()`, `get_item()`, `get_children()`, `get_all_parents()`
 - REST API на FastAPI
+- Соответствие wemake-python-styleguide и PEP8
+
+### 2. Avito - URL Shortener
+
+HTTP сервис для сокращения URL с поддержкой кастомных ссылок.
+
+**Ссылка:** [2_backend_avito](./2_backend_avito)
+
+**Основные возможности:**
+- Создание коротких ссылок с автогенерацией кода
+- Поддержка кастомных кодов для ссылок
+- Валидация URL с проверкой доступности
+- Редирект на оригинальный URL
+- REST API на FastAPI
+- База данных PostgreSQL
+- Покрытие тестами
+- Соответствие wemake-python-styleguide и PEP8

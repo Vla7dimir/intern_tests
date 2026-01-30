@@ -6,7 +6,7 @@ from pydantic import BaseModel
 class ItemIdRequest(BaseModel):
     """Request schema for item ID operations."""
 
-    id: int  # noqa: A003
+    id: int  #
 
 
 class TreeStoreRequest(BaseModel):
