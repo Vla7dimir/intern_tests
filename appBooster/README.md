@@ -33,7 +33,7 @@ API для управления AB-тестами:
 - Эндпойнт `/api/v1/statistics` - статистика по экспериментам (JSON)
 - Эндпойнт `/statistics` - страница статистики (HTML)
 
-**Менеджер экспериментов** (`internal/experiments/manager.py`):
+**Менеджер экспериментов** (`app/experiments/manager.py`):
 - Создание и управление устройствами
 - Распределение устройств по экспериментам с учетом весов
 - Проверка, что устройство участвует только в экспериментах, созданных до первого запроса
@@ -67,11 +67,11 @@ API для управления AB-тестами:
 
 ## Технологии
 
-- **Python 3.11+**
-- **FastAPI** - веб-фреймворк
-- **PostgreSQL** - база данных
-- **SQLAlchemy** - ORM
-- **Jinja2** - шаблоны для HTML страницы
+- **Python 3.9+**
+- **FastAPI** — веб-фреймворк
+- **SQLAlchemy** — ORM (SQLite по умолчанию, поддерживается PostgreSQL)
+- **Jinja2** — шаблоны для HTML-страницы статистики
+- **Pydantic** — валидация и схемы API
 
 ## Установка и запуск
 
@@ -89,19 +89,15 @@ pip install -r requirements.txt
 ./scripts/setup.sh
 ```
 
-2. Настройка базы данных:
-```bash
-createdb abtesting
-# Или используйте PostgreSQL через Docker
-```
+2. База данных: при первом запуске создаётся SQLite-файл `abtesting.db`. Для PostgreSQL задайте `DATABASE_URL` в `.env`.
 
 3. Запуск:
 ```bash
-# Используется SQLite по умолчанию (файл abtesting.db создается автоматически)
-uvicorn cmd.server.main:app --host 127.0.0.1 --port 8000 --reload
+# SQLite по умолчанию (файл abtesting.db создаётся при первом запуске)
+uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 
-# Или с явным указанием DATABASE_URL:
-DATABASE_URL=sqlite:///./abtesting.db uvicorn cmd.server.main:app --host 127.0.0.1 --port 8000 --reload
+# С явным указанием DATABASE_URL:
+DATABASE_URL=sqlite:///./abtesting.db uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
 API доступен на http://127.0.0.1:8000
@@ -212,7 +208,6 @@ pytest -x
 pytest --lf
 ```
 
-Подробнее см. `TEST_COMMANDS.md`
 
 ## Структура проекта
 
@@ -228,7 +223,10 @@ appBooster/
 ├── migrations/           # Миграции БД
 ├── templates/            # HTML шаблоны
 ├── tests/                # Тесты
-└── scripts/              # Скрипты
+├── screens/              # Скриншоты API
+├── scripts/              # Скрипты
+├── run_tests.sh          # Запуск тестов (venv + pytest)
+└── requirements.txt
 ```
 
 ## Переменные окружения
@@ -236,11 +234,6 @@ appBooster/
 - `DATABASE_URL` - URL базы данных (по умолчанию `postgresql://abtesting:abtesting@localhost:5432/abtesting`)
 - `BASE_URL` - базовый URL приложения (по умолчанию `http://localhost:8000`)
 
-## Postman коллекция
-
-Для удобного тестирования создана коллекция Postman:
-- `postman_collection.json` - коллекция для импорта в Postman
-- `POSTMAN_REQUESTS.md` - описание всех запросов
 
 ## Дополнительно
 
