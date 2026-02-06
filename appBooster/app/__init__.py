@@ -1,1 +1,0 @@
-"""AB Testing application package."""
