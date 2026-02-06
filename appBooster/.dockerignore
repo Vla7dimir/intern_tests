@@ -1,0 +1,15 @@
+.git
+.gitignore
+.idea
+.env
+*.md
+*.png
+__pycache__
+*.pyc
+.pytest_cache
+.coverage
+htmlcov
+tests
+scripts
+screens
+*.db

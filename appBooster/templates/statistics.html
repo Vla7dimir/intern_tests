@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AB Testing Statistics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .experiment-header {
+            background-color: #2196F3;
+            color: white;
+            font-weight: bold;
+        }
+        .option-row {
+            background-color: #f9f9f9;
+        }
+        .percentage {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>AB Testing Statistics</h1>
+    
+    {% for stat in statistics %}
+    <table>
+        <tr class="experiment-header">
+            <th colspan="4">Experiment: {{ stat.experiment_key }}</th>
+        </tr>
+        <tr>
+            <th>Option</th>
+            <th>Count</th>
+            <th>Expected Weight</th>
+            <th>Actual Percentage</th>
+        </tr>
+        {% for value, data in stat.distribution.items() %}
+        <tr class="option-row">
+            <td>{{ value }}</td>
+            <td>{{ data.count }}</td>
+            <td>{{ data.weight }}%</td>
+            <td class="percentage">{{ data.percentage }}%</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="4"><strong>Total Devices: {{ stat.total_devices }}</strong></td>
+        </tr>
+    </table>
+    {% endfor %}
+</body>
+</html>
