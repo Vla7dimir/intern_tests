@@ -15,10 +15,29 @@ pip install -r requirements.txt
 Создайте `.env` файл:
 
 ```bash
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USER=urlshortener
+DATABASE_PASSWORD=urlshortener
+DATABASE_NAME=urlshortener
+
+BASE_URL_SCHEME=http
+BASE_URL_HOST=localhost
+BASE_URL_PORT=8000
+
+CODE_LENGTH=6
+```
+
+Или используйте старый формат для обратной совместимости:
+
+```bash
 DATABASE_URL=sqlite:///./test.db
 BASE_URL=http://localhost:8000
 CODE_LENGTH=6
+LOG_LEVEL=INFO
 ```
+
+Доступные уровни логирования: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`
 
 ## Запуск
 

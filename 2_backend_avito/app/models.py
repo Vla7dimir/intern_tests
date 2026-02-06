@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from sqlalchemy import Column, DateTime, Integer, String
 
@@ -10,7 +10,11 @@ class UrlRecord(Base):
 
     __tablename__ = "urls"
 
-    id = Column(Integer, primary_key=True, index=True)  # noqa: A003
-    full_url = Column(String, nullable=False, index=True)
-    code = Column(String, unique=True, nullable=False, index=True)
-    created = Column(DateTime, default=datetime.utcnow)
+    id = Column(Integer, primary_key=True, index=True) 
+    full_url = Column(String(2048), nullable=False, index=True)
+    code = Column(String(50), unique=True, nullable=False, index=True)
+    created = Column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        index=True,
+    )

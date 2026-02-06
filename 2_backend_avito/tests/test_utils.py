@@ -1,16 +1,45 @@
+import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session, sessionmaker
+
+from app.database import Base
 from app.utils import check_code, check_url, make_code
 
+SQLALCHEMY_DATABASE_URL = "sqlite:///./test_utils.db"
 
-def test_make_code():
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL,
+    connect_args={"check_same_thread": False},
+)
+TestingSessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine,
+)
+
+
+@pytest.fixture(scope="function")
+def db():
+    """Create test database session."""
+    Base.metadata.create_all(bind=engine)
+    db_session = TestingSessionLocal()
+    try:
+        yield db_session
+    finally:
+        db_session.close()
+        Base.metadata.drop_all(bind=engine)
+
+
+def test_make_code(db: Session):
     """Test generating random code with default length."""
-    code = make_code()
+    code = make_code(db)
     assert len(code) == 6
     assert code.isalnum()
 
 
-def test_make_code_custom_length():
+def test_make_code_custom_length(db: Session):
     """Test generating random code with custom length."""
-    code = make_code(10)
+    code = make_code(db, size=10)
     assert len(code) == 10
 
 
