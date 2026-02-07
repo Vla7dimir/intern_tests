@@ -1,0 +1,29 @@
+# Virtual env and caches
+.venv
+venv
+env
+__pycache__
+*.py[cod]
+.pytest_cache
+.coverage
+htmlcov
+
+# Git and IDE
+.git
+.idea
+.vscode
+
+# Local env and DB (use .env.example in image)
+.env
+*.sqlite3
+db.sqlite3
+
+# Docs and screens (not needed in image)
+*.md
+Task-itself.md
+my_django_project/screens
+
+# CI and dev config
+.github
+setup.cfg
+pytest.ini
