@@ -6,6 +6,8 @@
 
 ## Проекты
 
+
+
 ### 1. ООО мстрой - TreeStore API
 
 Класс для работы с деревом объектов с быстрым доступом O(1).
@@ -29,3 +31,15 @@
 - База данных PostgreSQL
 - Покрытие тестами
 - Соответствие wemake-python-styleguide и PEP8
+
+
+### 3. Ivelum — Hacker News Proxy
+
+**Ссылка:** [ivelum](./ivelum)
+
+**Основные возможности:**
+- HTTP-прокси для Hacker News
+- Модификация текста: ™ после слов из 6 букв
+- Переписывание ссылок и форм через прокси
+- FastAPI, httpx, BeautifulSoup, структура в стиле Python (`app/`, `config/`)
+- Тесты pytest, Docker
