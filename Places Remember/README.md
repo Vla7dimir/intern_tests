@@ -35,14 +35,16 @@ pip install -r ../requirements.txt
 
 ### 2. Переменные окружения
 
-Скопируйте пример в **корень проекта** (каталог `Places Remember/`), иначе `settings` не подхватит переменные:
+Скопируйте пример и при необходимости задайте ключи. `.env` можно положить в `Places Remember/` или в `my_django_project/`:
 
 ```bash
 cd "Places Remember"
 cp .env.example .env
+# или
+cp .env.example my_django_project/.env
 ```
 
-Для локальной разработки можно оставить значения по умолчанию (SQLite, DEBUG=True). Для входа через VK/Google укажите ключи в `.env` (см. .env.example).
+Для входа через VK/Google укажите ключи в `.env` (см. .env.example).
 
 ### 3. Миграции и запуск
 
@@ -54,11 +56,22 @@ python manage.py migrate
 python manage.py runserver 8000
 ```
 
-Если при запуске видите *«You have 35 unapplied migration(s)»* — остановите сервер (Ctrl+C), выполните `python manage.py migrate`, затем снова `python manage.py runserver 8000`.
+Если при запуске видите сообщение о неприменённых миграциях — выполните `python manage.py migrate`, затем снова запустите сервер.
 
 Откройте в браузере: **http://127.0.0.1:8000/**
 
+## Скриншоты
 
+| Экран | Файл |
+|-------|------|
+| Главная (кнопки входа) | [главная страница.png](my_django_project/screens/главная%20страница.png) |
+| Авторизация через Google | [авторизация в гугле.png](my_django_project/screens/авторизация%20в%20гугле.png) |
+| Авторизация через Google (шаг 2) | [авторизация в гугле 2.png](my_django_project/screens/авторизация%20в%20гугле%202.png) |
+| Список воспоминаний | [список воспоминаний.png](my_django_project/screens/список%20воспоминаний.png) |
+| Страница воспоминания | [страница воспоминаний.png](my_django_project/screens/страница%20воспоминаний.png) |
+| Добавление воспоминания (карта) | [добавить воспоминания.png](my_django_project/screens/добавить%20воспоминания.png) |
+
+Подробнее: [screens/README.md](my_django_project/screens/README.md).
 
 Если видите `{"detail":"Not Found"}`, на порту 8000 запущено другое приложение (например FastAPI). Остановите его или запустите Django на другом порту: `python manage.py runserver 8001` и откройте http://127.0.0.1:8001/
 
