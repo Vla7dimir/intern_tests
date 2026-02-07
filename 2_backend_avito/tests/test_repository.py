@@ -1,0 +1,81 @@
+import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session, sessionmaker
+
+from app.database import Base
+from app.exceptions import CodeAlreadyExistsError, CodeNotFoundError
+from app.repository import find_by_code, get_by_code, save_url
+
+SQLALCHEMY_DATABASE_URL = "sqlite:///./test_repository.db"
+
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL,
+    connect_args={"check_same_thread": False},
+)
+TestingSessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine,
+)
+
+
+@pytest.fixture(scope="function")
+def db():
+    """Create test database session."""
+    Base.metadata.create_all(bind=engine)
+    db_session = TestingSessionLocal()
+    try:
+        yield db_session
+    finally:
+        db_session.close()
+        Base.metadata.drop_all(bind=engine)
+
+
+def test_save_url(db: Session):
+    """Test saving URL without custom code."""
+    record = save_url(db, "https://www.example.com")
+    assert record.full_url == "https://www.example.com"
+    assert record.code is not None
+    assert len(record.code) == 6
+
+
+def test_save_url_with_custom_code(db: Session):
+    """Test saving URL with custom code."""
+    record = save_url(db, "https://www.example.com", "custom-code")
+    assert record.code == "custom-code"
+
+
+def test_save_url_duplicate_code(db: Session):
+    """Test saving URL with duplicate code raises error."""
+    save_url(db, "https://www.example.com", "duplicate-code")
+    with pytest.raises(CodeAlreadyExistsError):
+        save_url(db, "https://www.another.com", "duplicate-code")
+
+
+def test_find_by_code(db: Session):
+    """Test finding URL by code."""
+    record = save_url(db, "https://www.example.com", "test-code")
+    found = find_by_code(db, "test-code")
+    assert found is not None
+    assert found.code == "test-code"
+    assert found.full_url == "https://www.example.com"
+
+
+def test_find_by_code_not_found(db: Session):
+    """Test finding non-existent code."""
+    found = find_by_code(db, "nonexistent")
+    assert found is None
+
+
+def test_get_by_code(db: Session):
+    """Test getting URL by code."""
+    record = save_url(db, "https://www.example.com", "test-code")
+    found = get_by_code(db, "test-code")
+    assert found.code == "test-code"
+    assert found.full_url == "https://www.example.com"
+
+
+def test_get_by_code_not_found(db: Session):
+    """Test getting non-existent code raises error."""
+    with pytest.raises(CodeNotFoundError):
+        get_by_code(db, "nonexistent")
