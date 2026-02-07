@@ -1,0 +1,1 @@
+"""Тесты Hacker News Proxy."""
