@@ -7,39 +7,15 @@
 ## Проекты
 
 
+### 6. SQL (Сбербанк)
 
-### 1. ООО мстрой - TreeStore API
+**Папка:** [6_sql_sber](./6_sql_sber)
 
-Класс для работы с деревом объектов с быстрым доступом O(1).
-
-**Ссылка:** [1_backend_мстрой](./1_backend_мстрой)
-
+**Содержимое:** условие (Task.md), схема и данные (departments.sql, employees.sql), решение (solution.sql), скриншоты (SCREEN.md, images/).
 **Основные возможности:**
 - Быстрый доступ к элементам дерева O(1)
 - Методы: `getAll()`, `getItem()`, `getChildren()`, `getAllParents()`
 - REST API на FastAPI
 
 
-**Ссылка:** [2_backend_avito](./2_backend_avito)
 
-**Основные возможности:**
-- Создание коротких ссылок с автогенерацией кода
-- Поддержка кастомных кодов для ссылок
-- Валидация URL с проверкой доступности
-- Редирект на оригинальный URL
-- REST API на FastAPI
-- База данных PostgreSQL
-- Покрытие тестами
-- Соответствие wemake-python-styleguide и PEP8
-
-
-### 3. Ivelum — Hacker News Proxy
-
-**Ссылка:** [ivelum](./ivelum)
-
-**Основные возможности:**
-- HTTP-прокси для Hacker News
-- Модификация текста: ™ после слов из 6 букв
-- Переписывание ссылок и форм через прокси
-- FastAPI, httpx, BeautifulSoup, структура в стиле Python (`app/`, `config/`)
-- Тесты pytest, Docker
