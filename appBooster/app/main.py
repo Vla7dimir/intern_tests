@@ -10,6 +10,7 @@ from typing import List
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
@@ -24,6 +25,7 @@ logger = get_logger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = BASE_DIR / "templates"
+STATIC_DIR = BASE_DIR / "static"
 templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 
 
@@ -53,6 +55,8 @@ app = FastAPI(
     description="REST API for AB testing experiments with device assignment and statistics",
     lifespan=lifespan,
 )
+
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 
 @app.middleware("http")
