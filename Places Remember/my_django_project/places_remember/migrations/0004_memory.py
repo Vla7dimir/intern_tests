@@ -1,4 +1,6 @@
-# Migration: Memory model (depends on CustomUser).
+"""
+Migration 4/4: Memory model (user, title, comment, lat, lng, created_at).
+"""
 
 from django.db import migrations, models
 
@@ -6,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("places_remember", "0001_initial"),
+        ("places_remember", "0003_customuser_user_permissions"),
     ]
 
     operations = [

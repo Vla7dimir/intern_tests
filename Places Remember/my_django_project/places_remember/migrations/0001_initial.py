@@ -1,4 +1,9 @@
-# Initial migration: CustomUser.
+"""
+Migration 1/4: CustomUser main table only (extends AbstractUser with avatar_url).
+
+Creates 1 table: places_remember_customuser.
+M2M (groups, user_permissions) — in 0002 and 0003.
+"""
 
 import django.contrib.auth.models
 import django.contrib.auth.validators
@@ -30,8 +35,6 @@ class Migration(migrations.Migration):
                 ("is_active", models.BooleanField(default=True, verbose_name="active")),
                 ("date_joined", models.DateTimeField(default=django.utils.timezone.now, verbose_name="date joined")),
                 ("avatar_url", models.URLField(blank=True, max_length=500)),
-                ("groups", models.ManyToManyField(blank=True, related_name="user_set", related_query_name="user", to="auth.group", verbose_name="groups")),
-                ("user_permissions", models.ManyToManyField(blank=True, related_name="user_set", related_query_name="user", to="auth.permission", verbose_name="user permissions")),
             ],
             options={
                 "verbose_name": "user",
