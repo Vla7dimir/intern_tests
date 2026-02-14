@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AB Testing Statistics</title>
+    <link rel="stylesheet" href="/static/css/statistics.css">
+</head>
+<body>
+    <h1>AB Testing Statistics</h1>
+
+    {% for stat in statistics %}
+    <table>
+        <tr class="experiment-header">
+            <th colspan="4">Experiment: {{ stat.experiment_key }}</th>
+        </tr>
+        <tr>
+            <th>Option</th>
+            <th>Count</th>
+            <th>Expected Weight</th>
+            <th>Actual Percentage</th>
+        </tr>
+        {% for value, data in stat.distribution.items() %}
+        <tr class="option-row">
+            <td>{{ value }}</td>
+            <td>{{ data.count }}</td>
+            <td>{{ data.weight }}%</td>
+            <td class="percentage">{{ data.percentage }}%</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="4"><strong>Total Devices: {{ stat.total_devices }}</strong></td>
+        </tr>
+    </table>
+    {% endfor %}
+</body>
+</html>
