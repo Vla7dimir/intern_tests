@@ -12,6 +12,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.api.pages import router as pages_router
 from app.api.v1 import api_router
+from app.config import APP_DESCRIPTION, APP_TITLE, APP_VERSION
 from app.db.migrations import run_migrations
 from app.logger import get_logger, setup_logging
 
@@ -43,9 +44,9 @@ async def lifespan(_app: FastAPI):
 
 
 app = FastAPI(
-    title="AB Testing API",
-    version="1.0.0",
-    description="REST API for AB testing experiments with device assignment and statistics",
+    title=APP_TITLE,
+    version=APP_VERSION,
+    description=APP_DESCRIPTION,
     lifespan=lifespan,
 )
 
